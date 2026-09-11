@@ -1,0 +1,116 @@
+وصف شامل وتخيلي للعبة My Talking Anzu Mazaki
+شاشة اللقاء والتفاعل الأساسية (الواجهة الرئيسية)
+عند فتح اللعبة، تظهر "أنزو مازاكي" بطراز أنمي ثلاثي الأبعاد (3D) في منتصف غرفتها الأنيقة. ترتدي زيها المدرسي أو ملابس التدريب اليومية، وتتفاعل مع حركات الشاشة:
+ * تكرار الصوت: تلتفت أنزو وتضع يدها بقرب أذنها للاستماع، ثم تكرر كل ما تقوله بنبرة صوتها المرحة مع حركات تعبيرية خفيفة.
+ * التفاعل باللمس: عند النقر على الشاشة، تتفاعل أنزو بأساليب مختلفة (تلوح بيدها، تضحك، تقفز بأسلوب استعراضي، أو تظهر ردود فعل طريفة عند النقر المتكرر).
+أهم الأقسام وشريط التحكم في الأسفل
+ * غرفة المعيشة والرقص:
+   تضم مشغل موسيقى للتحكم في الخلفيات الصوتية، ومساحة مخصصة تجعل أنزو تؤدي رقصات استعراضية مختلفة بمجرد الضغط على أزرار الحركات.
+ * خزانة الملابس (The Wardrobe):
+   قسم كامل لتعديل مظهر الشخصية، يحتوي على:
+   * أزياء متنوعة (ملابس مدرسة، ملابس رقص عصرية، وأزياء مستوحاة من أوراق اللعب).
+   * إكسسوارات مختلفة مثل النظارات، تسريحات الشعر، والقفازات.
+ * المطبخ ورعاية الطاقة:
+   شريط سفلي يوضح مستوى طاقة ونشاط أنزو. يمكنك إطعامها وجبات خفيفة ومشروبات من المطبخ لزيادة طاقتها للتدريب.
+ * قسم الألعاب المصغرة (Mini-Games Arcade):
+   مجموعة من الألعاب السريعة لجمع النقاط والعملات الذهبية:
+   * لعبة الإيقاع (Rhythm Beats): النقر على النوتات الموسيقية المتساقطة لتقوم أنزو بإنهاء رقصة كاملة بنجاح.
+   * تخمين الأوراق: لعبة ألغاز سريعة لتجميع بطاقات متشابهة وزيادة النتيجة.
+[![.github/workflows/azure-functions-app-dotnet.yml](https://github.com/m69319748-stack/Game-guardian-red-guardian-ai-/actions/workflows/azure-functions-app-dotnet.yml/badge.svg)](https://github.com/m69319748-stack/Game-guardian-red-guardian-ai-/actions/workflows/azure-functions-app-dotnet.yml)val packageName = "com.example.app" // استبدله بمعرف تطبيقك
+try {
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+} catch (e: ActivityNotFoundException) {
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+}
+
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import androidx.core.content.FileProvider
+import java.io.File
+
+fun installAPK(context: Context, apkFile: File) {
+    if (!apkFile.exists()) return
+
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        val apkUri: Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // استخدام FileProvider لأندرويد 7.0 وما فوق
+            FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.provider",
+                apkFile
+            )
+        } else {
+            Uri.fromFile(apkFile)
+        }
+
+        setDataAndType(apkUri, "application/vnd.android.package-archive")
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+
+    // التحقق من إذن تثبيت المصادر المجهولة في أندرويد 8.0+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (!context.packageManager.canRequestPackageInstalls()) {
+            // توجيه المستخدم لإعطاء الإذن من إعدادات النظام أولاً
+            val permissionIntent = Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+                data = Uri.parse("package:${context.packageName}")
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(permissionIntent)
+            return
+        }
+    }
+
+    // تشغيل واجهة التثبيت
+    context.startActivity(intent)
+}
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- يمثل هذا المسار مجلد الملفات الخارجية للتطبيق أو التنزيلات -->
+    <external-path name="external_files" path="." />
+</paths>
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import androidx.core.content.FileProvider
+import java.io.File
+
+fun installAPK(context: Context, apkFile: File) {
+    if (!apkFile.exists()) return
+
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        val apkUri: Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // استخدام FileProvider لأندرويد 7.0 وما فوق
+            FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.provider",
+                apkFile
+            )
+        } else {
+            Uri.fromFile(apkFile)
+        }
+
+        setDataAndType(apkUri, "application/vnd.android.package-archive")
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+
+    // التحقق من إذن تثبيت المصادر المجهولة في أندرويد 8.0+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (!context.packageManager.canRequestPackageInstalls()) {
+            // توجيه المستخدم لإعطاء الإذن من إعدادات النظام أولاً
+            val permissionIntent = Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+                data = Uri.parse("package:${context.packageName}")
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(permissionIntent)
+            return
+        }
+    }
+
+    // تشغيل واجهة التثبيت
+    context.startActivity(intent)
+}
