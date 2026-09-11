@@ -1,0 +1,6 @@
+{
+  "name": "My Talking Anzu Mazaki",
+  "description": "لعبة التفاعل الافتراضية مع أنزو مازاكي: تكرار الصوت والمحادثة، التفاعل باللمس، غرفة الرقص، خزانة الملابس، رعاية الطاقة، والألعاب المصغرة.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
